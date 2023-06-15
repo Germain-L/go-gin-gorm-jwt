@@ -1,4 +1,4 @@
-# Monolith Application - README
+# Go Gin auth with JWT and Gorm models
 
 ## Project Overview
 
