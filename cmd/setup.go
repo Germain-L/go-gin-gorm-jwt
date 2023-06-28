@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"monolith/database"
-	"monolith/handlers"
-	"monolith/middlewares"
-	"monolith/utils"
+	"server/database"
+	"server/handlers"
+	"server/middlewares"
+	"server/utils"
 
 	"os"
 	"strconv"
@@ -18,10 +18,12 @@ import (
 func SetupRouter(db *gorm.DB, log bool) *gin.Engine {
 
 	r := gin.Default()
+
+	m := middlewares.NewMiddleware(db)
 	h := handlers.NewHandler(db)
 
 	if log {
-		r.Use(middlewares.Logger())
+		r.Use(m.Logger())
 	}
 
 	r.GET("/env", h.Env)
@@ -34,7 +36,7 @@ func SetupRouter(db *gorm.DB, log bool) *gin.Engine {
 	}
 
 	api := r.Group("/api")
-	api.Use(middlewares.Authorize())
+	api.Use(m.Authorize())
 	{
 		api.GET("/me", h.GetUser)
 	}

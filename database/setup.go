@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"monolith/models"
+	"server/models"
 	"time"
 
 	"gorm.io/gorm"
@@ -15,7 +15,7 @@ func ConnectToDB(dialector gorm.Dialector, cfg *gorm.Config) (*gorm.DB, error) {
 	for i := 0; i < maxRetries; i++ {
 		db, err := gorm.Open(dialector, cfg)
 		if err == nil {
-			db.AutoMigrate(&models.User{}, &models.RefreshToken{}, &models.File{})
+			db.AutoMigrate(&models.User{}, &models.RefreshToken{}, &models.File{}, &models.Log{})
 			return db, nil
 		}
 

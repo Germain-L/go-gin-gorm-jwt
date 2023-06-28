@@ -3,12 +3,13 @@ package middlewares
 import (
 	"log"
 	"os"
+	"server/models"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Logger() gin.HandlerFunc {
+func (m Middleware) Logger() gin.HandlerFunc {
 	file, err := os.OpenFile("gin.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatal(err)
@@ -25,10 +26,27 @@ func Logger() gin.HandlerFunc {
 		// After processing the request
 		end := time.Now()
 		latency := end.Sub(start)
-		clientIP := c.ClientIP()
 		method := c.Request.Method
+		clientIP := c.ClientIP()
 		statusCode := c.Writer.Status()
 		path := c.Request.URL.Path
+
+		// if ip is already stored in db, use it, otherwise get it from request
+		ip := models.IP{IP: clientIP}
+		err := ip.FirstOrCreate(m.db)
+		if err != nil {
+			logger.Println("Error occurred during IP geolocation: ", err)
+		}
+
+		log := models.Log{
+			Path:    path,
+			Method:  method,
+			Status:  statusCode,
+			Latency: latency.Milliseconds(),
+			IPID:    ip.ID,
+		}
+
+		m.db.Create(&log)
 
 		// Log base request info
 		logger.Printf("ClientIP: %s Method: %s Path: %s Status: %d Latency: %v", clientIP, method, path, statusCode, latency)

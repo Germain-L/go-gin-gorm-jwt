@@ -1,9 +1,9 @@
 package middlewares
 
 import (
-	"monolith/security"
 	"net/http"
 	"os"
+	"server/security"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +13,7 @@ var (
 	secret = os.Getenv("secret")
 )
 
-func Authorize() gin.HandlerFunc {
+func (m Middleware) Authorize() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {

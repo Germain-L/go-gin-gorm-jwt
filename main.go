@@ -1,6 +1,6 @@
 package main
 
-import "monolith/cmd"
+import "server/cmd"
 
 func main() {
 	cmd.Run()

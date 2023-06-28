@@ -1,5 +1,8 @@
+from faker import Faker
 import requests
 import jwt
+
+fake = Faker()
 
 class API:
     def __init__(self, base_url):
@@ -36,14 +39,18 @@ class API:
 def main():
     api = API("http://localhost:8080")
     
+    # Generate fake email and password
+    email = fake.email()
+    password = fake.password()
+    
     # Register
     print("Registering...")
-    register_resp = api.register("example@example.com", "example_password")
+    register_resp = api.register(email, password)
     print(register_resp)
 
     # Login
     print("Logging in...")
-    login_resp = api.login("example@example.com", "example_password")
+    login_resp = api.login(email, password)
     print(login_resp)
     
     # Get user info
@@ -57,4 +64,5 @@ def main():
     print(refresh_resp)
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()

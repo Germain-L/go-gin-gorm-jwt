@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"monolith/security"
 	"net/http"
 	"os"
+	"server/security"
 	"time"
 
 	"github.com/gin-gonic/gin"

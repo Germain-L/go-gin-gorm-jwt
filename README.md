@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a monolithic application written in Go that provides a secure way to handle user authentication using JWT (JSON Web Tokens). It includes functionality for user registration, login, and token refresh, along with secure routes that require authentication to access. The application uses the Gin web framework and Gorm for ORM. For storage, it utilizes a PostgreSQL database.
+This project is a serveric application written in Go that provides a secure way to handle user authentication using JWT (JSON Web Tokens). It includes functionality for user registration, login, and token refresh, along with secure routes that require authentication to access. The application uses the Gin web framework and Gorm for ORM. For storage, it utilizes a PostgreSQL database.
 
 This project also includes a python script as an API client that communicates with the application, performing functions like user registration, login, token refreshing, and retrieving user information.
 

@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"monolith/models"
-	"monolith/security"
 	"net/http"
+	"server/models"
+	"server/security"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -48,7 +48,7 @@ func (h *Handler) Register(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "Successfully registered"})
+	c.JSON(http.StatusCreated, gin.H{"message": "Successfully registered"})
 }
 
 func (h *Handler) Login(c *gin.Context) {
